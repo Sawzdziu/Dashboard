@@ -1,0 +1,18 @@
+<div class="dashboard-container">
+  <gridster [options]="options">
+    <gridster-item [item]="item" *ngFor="let item of dashboard">
+      <div class="gridster-item-content" *ngIf="item.hasContent">
+        <div class="stuff">
+          <span>Some content to select and click without dragging the widget</span>
+          <iframe src="https://youtu.be/UePtoxDhJSw"></iframe>
+        </div>
+      </div>
+      <label *ngIf="!item.hasContent">{{item.label}}</label>
+    </gridster-item>
+  </gridster>
+<!--  <div *ngFor="let drag of data">-->
+<!--    <div class="example-box" cdkDragBoundary=".dashboard-container" cdkDrag>-->
+<!--      Drag me around ID = {{drag.id}};-->
+<!--    </div>-->
+<!--  </div>-->
+</div>
