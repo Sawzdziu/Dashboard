@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {WidgetService} from '../widget.service';
 import {Subscription} from 'rxjs';
 import {CompactType, DisplayGrid, Draggable, GridsterConfig, GridsterItem, GridType, PushDirections, Resizable} from 'angular-gridster2';
@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   id = 4;
   data = [{id: 1}, {id: 2}, {id: 3}];
   subscription: Subscription;
+  resizeEvent: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private widgetService: WidgetService) {
     this.subscription = widgetService.addWidget$.subscribe(
@@ -94,7 +95,11 @@ export class DashboardComponent implements OnInit {
       disableWarnings: false,
       scrollToNewItems: false,
       itemChangeCallback: DashboardComponent.itemChange,
-      itemResizeCallback: DashboardComponent.itemResize,
+      itemResizeCallback: (item) => {
+        // update DB with new size
+        // send the update to widgets
+        this.resizeEvent.emit(item);
+      }
     };
 
     this.dashboard = [
